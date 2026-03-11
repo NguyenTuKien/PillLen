@@ -1,6 +1,6 @@
-const dbName = process.env.MONGO_INITDB_DATABASE;
-const dbUser = process.env.MONGO_INITDB_USERNAME;
-const dbPwd = process.env.MONGO_INITDB_PASSWORD;
+const dbName = process.env.SPRING_MONGODB_DATABASE;
+const dbUser = process.env.SPRING_MONGODB_USERNAME;
+const dbPwd = process.env.SPRING_MONGODB_PASSWORD;
 
 db = db.getSiblingDB(dbName);
 
