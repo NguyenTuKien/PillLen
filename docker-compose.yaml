@@ -1,31 +1,28 @@
 services:
   database:
-    image: mongo:latest
+    image: mongo:7
     restart: always
-    # ports:
-    #   - "27017:27017"
     env_file:
       - .env
     volumes:
       - ./database/mongo-data:/data/db
       - ./database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     healthcheck:
-      test: [ "CMD-SHELL", "echo > /dev/tcp/localhost/8080" ]
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
       interval: 30s
       timeout: 10s
-      retries: 5
+      retries: 3
     networks:
       - pharmagent
-  
+
   backend:
     build: ./backend
     image: ${DOCKER_REGISTRY:-ngtukien218}/pharmagent-backend:${BACKEND_VERSION:-latest}
     restart: always
-    environment:
-      # Bắt buộc phải dùng URI nguyên khối cho Spring Boot 3.0 trở lên
-      SPRING_MONGODB_URI: "mongodb://${SPRING_MONGODB_USERNAME}:${SPRING_MONGODB_PASSWORD}@database:27017/${SPRING_MONGODB_DATABASE}?authSource=${SPRING_MONGODB_DATABASE}"
     env_file:
       - .env
+    environment:
+      SPRING_MONGODB_URI: mongodb://${SPRING_MONGODB_USERNAME}:${SPRING_MONGODB_PASSWORD}@database:27017/${SPRING_MONGODB_DATABASE}?authSource=admin
     depends_on:
       database:
         condition: service_healthy
@@ -50,10 +47,7 @@ services:
         condition: service_healthy
     networks:
       - pharmagent
-    
+
 networks:
   pharmagent:
     driver: bridge
-  
-
-
