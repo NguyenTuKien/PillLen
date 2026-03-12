@@ -4,11 +4,11 @@ spring:
   application:
     name: backend
   mongodb:
-    uri: mongodb+srv://admin:Nhom06_LTW@clustertest.xg7jkii.mongodb.net/PharmAgentDB?retryWrites=true&w=majority&authSource=admin
+    uri: mongodb+srv://n07:LTW_2026@clustertest.xg7jkii.mongodb.net/pharmagentdb.ct01?appName=ClusterTest
 
 logging:
   level:
-    root: info
+    root: warn
 
 management:
   endpoints:
