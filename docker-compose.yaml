@@ -17,7 +17,7 @@ services:
 
   backend:
     build: ./backend
-    image: ${DOCKER_REGISTRY:-ngtukien218}/pharmagent-backend:${BACKEND_VERSION:-latest}
+    image: ${DOCKER_REGISTRY:-ngtukien218}/pharmagent-backend:${TAG:-latest}
     restart: always
     env_file:
       - .env
@@ -38,7 +38,7 @@ services:
 
   frontend:
     build: ./frontend
-    image: ${DOCKER_REGISTRY:-ngtukien218}/pharmagent-frontend:${FRONTEND_VERSION:-latest}
+    image: ${DOCKER_REGISTRY:-ngtukien218}/pharmagent-frontend:${TAG:-latest}
     restart: always
     ports:
       - "80:80"
